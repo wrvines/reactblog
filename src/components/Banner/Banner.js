@@ -22,13 +22,13 @@ function Banner() {
 
     getDocs(q, articleRef)
       .then((res) => {
-        console.log(res.docs[0].data());
+        // console.log(res.docs[0].data());
         //get data and store in array
         const articles = res.docs.map((item) => ({
           id: item.id,
           ...item.data(),
         }));
-        console.log(articles);
+        // console.log(articles);
         setMainArticle(articles[0]);
         setOtherArticles(articles.splice(1));
       })
@@ -50,8 +50,9 @@ function Banner() {
       </div>
 
       <div className="other-articles-container">
-        {otherArticles.map((item) => (
+        {otherArticles.map((item, index) => (
           <div
+            key={item.id}
             className="other-article-container"
             style={{ backgroundImage: `url(${item?.imageUrl})` }}
           >
