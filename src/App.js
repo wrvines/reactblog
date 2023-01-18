@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import Header from "./components/Header/Header";
 import Auth from "./pages/Auth/Auth";
+import AddArticle from "./pages/AddArticle/AddArticle";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/addarticle" element={<AddArticle />} />
         </Routes>
       </BrowserRouter>
     </div>
