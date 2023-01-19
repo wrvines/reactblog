@@ -28,47 +28,50 @@ function AddArticle() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(formData);
+    console.log(formData);
     //create a reference for the image
     const imageRef = ref(storage, `images/${formData.image.name + v4()}`);
-    //now upload the image to the bucket
+    //now upload the image to bucket
     uploadBytes(imageRef, formData.image)
       .then((res) => {
-        // console.log(res.ref);
-        //now get url from this ref in the bucket
-        getDownloadURL(res.ref).then((url) => {
-          //now we have all the data and url for the image
-          //we are ready to save to collection
-          //create a reference to article collection
-          const articleRef = collection(db, "articles");
-          //use addDoc to add a document to the collection
-          addDoc(articleRef, {
-            title: formData.title,
-            summary: formData.summary,
-            paragraphOne: formData.paragraphOne,
-            paragraphTwo: formData.paragraphTwo,
-            paragraphThree: formData.paragraphThree,
-            category: formData.category,
-            imageUrl: url,
-            createdAt: Timestamp.now().toDate(),
-            createdBy: user.displayName,
-            userId: user.uid,
-          });
-        });
-        .then(res => {
-            alert("article saved")
+        //console.log(res.ref)
+        //now get url from this ref in bucket
+        getDownloadURL(res.ref)
+          .then((url) => {
+            //now we have all data and url for image
+            //we are ready to save to collection
+            //create reference to articles collection
+            const articleRef = collection(db, "articles");
+            //use addDoc to add a document to collection
+            addDoc(articleRef, {
+              title: formData.title,
+              summary: formData.summary,
+              paragraphOne: formData.paragraphOne,
+              paragraphTwo: formData.paragraphTwo,
+              paragraphThree: formData.paragraphThree,
+              category: formData.category,
+              imageUrl: url,
+              createdAt: Timestamp.now().toDate(),
+              createdBy: user.displayName,
+              userId: user.uid,
+            });
+          })
+          .then((res) => {
+            // alert('article saved!')
             toast("Article saved successfully", {
-                type:"success",
-                autoClose: 1500
-            } )
+              type: "success",
+              autoClose: 1500,
+            });
+            //navigate('/')
+            //pause before navigating to home
             setTimeout(() => {
-               navigate("/") 
+              navigate("/");
             }, 2000);
-        })
+          });
       })
       .catch((err) => {
         console.log(err);
-        toast("could not save",{type: "error"})
+        toast("could not save", { type: "error" });
       });
   };
 

@@ -17,6 +17,11 @@ function Header() {
   return (
     <div className="header-container ">
       <FaHome onClick={() => navigate("/")} />
+      {user ? (
+        <Link to="/addarticle" className="auth-link">
+          Add Article
+        </Link>
+      ) : null}
       <div className="categories-container">
         {categories.map((item, index) => (
           <Link to={`/category/${item}`} className="nav-link" key={index}>
